@@ -71,8 +71,8 @@ const todo_about = (req, res) => {
 
 module.exports = {
     todo_index,
-    todo_addTask_post,
-    todo_addTask_get,
+    todo_addOrEditTask_post,
+    todo_addOrEditTask_get,
     todo_myTasks,
     todo_deleteTask,
     todo_completeTask,
