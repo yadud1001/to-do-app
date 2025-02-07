@@ -12,13 +12,13 @@ const todo_addOrEditTask_post = (req, res) => {
 
   if (_id) {
     Todo.findByIdAndUpdate(_id, updatedData, { new: true })
-      .then((result) => res.redirect('/my-tasks'))
+      .then((result) => res.redirect('/'))
       .catch((err) => console.log(err));
   } else {
     const task = new Todo(updatedData);
 
     task.save()
-    .then((result) => res.redirect('/my-tasks'))
+    .then((result) => res.redirect('/'))
     .catch((err) => console.log(err));
   }
 };
