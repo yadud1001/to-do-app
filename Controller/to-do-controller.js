@@ -7,12 +7,21 @@ const todo_index = (req, res) => {
   .catch((err) => console.log(err))
 };
 
-const todo_addTask_post = (req, res) => {
-    const task = new Todo(req.body)
+const todo_addOrEditTask_post = (req, res) => {
+  const updatedData = req.body;
+  const taskId = req.params.id;
 
-  task.save()
-  .then((result) => res.redirect('/'))
-  .catch((err) => console.log(err));
+  if (taskId) {
+    Todo.findByIdAndUpdate(taskId, updatedData, { new: true })
+      .then((result) => res.redirect('/my-tasks'))
+      .catch((err) => console.log(err));
+  } else {
+    const task = new Todo(req.body);
+
+    task.save()
+    .then((result) => res.redirect('/'))
+    .catch((err) => console.log(err));
+  }
 };
 
 const todo_addOrEditTask_get = (req, res) => {
@@ -20,7 +29,7 @@ const todo_addOrEditTask_get = (req, res) => {
 
   if (taskId) {
     Todo.findById(taskId)
-     .then((result) => res.render('addTask', {title: 'Edit Task', cssFile: 'addTask.css', task: result}))
+     .then((result) => res.render('addTask', {title: 'EditTask', cssFile: 'addTask.css', task: result}))
      .catch((err) => console.log(err))
   } else {
     res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css'});
