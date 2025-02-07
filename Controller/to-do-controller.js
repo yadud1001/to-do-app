@@ -15,8 +15,16 @@ const todo_addTask_post = (req, res) => {
   .catch((err) => console.log(err));
 };
 
-const todo_addTask_get = (req, res) => {
+const todo_addOrEditTask_get = (req, res) => {
+  const taskId = req.params.id;
+
+  if (taskId) {
+    Todo.findById(taskId)
+     .then((result) => res.render('addTask', {title: 'Edit Task', cssFile: 'addTask.css', task: result}))
+     .catch((err) => console.log(err))
+  } else {
     res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css'});
+  }
 };
 
 const todo_myTasks = (req, res) => {
