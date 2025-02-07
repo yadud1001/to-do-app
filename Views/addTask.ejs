@@ -35,6 +35,7 @@
         
             <label for="task-priority">Priority:</label>
             <select id="task-priority" name="priority" required>
+                <option value="" default>Select Priority</option>
                 <option value="Low" <%= task && task.priority === 'Low' ? 'selected' : '' %>>Low</option>
                 <option value="High" <%= task && task.priority === 'High' ? 'selected' : '' %>>High</option>
             </select>
