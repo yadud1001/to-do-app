@@ -25,6 +25,7 @@ app.post('/', todoController.todo_addOrEditTask_post);
 app.get('/add-task', todoController.todo_addOrEditTask_get);
 app.get('/edit-task/:id', todoController.todo_addOrEditTask_get);
 app.get('/my-tasks', todoController.todo_myTasks);
+app.get('/myTasks', (req, res) => {res.redirect('/my-tasks')});
 app.put('/my-tasks/:id/complete', todoController.todo_completeTask);
 app.delete('/my-tasks/clear-completed', todoController.todo_clearCompletedTasks);
 app.delete('/my-tasks/:id', todoController.todo_deleteTask);
