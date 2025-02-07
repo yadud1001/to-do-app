@@ -18,7 +18,7 @@ const todo_addOrEditTask_post = (req, res) => {
     const task = new Todo(updatedData);
 
     task.save()
-    .then((result) => res.redirect('/'))
+    .then((result) => res.redirect('/my-tasks'))
     .catch((err) => console.log(err));
   }
 };
