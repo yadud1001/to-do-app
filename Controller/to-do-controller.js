@@ -8,15 +8,14 @@ const todo_index = (req, res) => {
 };
 
 const todo_addOrEditTask_post = (req, res) => {
-  const updatedData = req.body;
-  const taskId = req.params.id;
+  const { _id, ...updatedData } = req.body;
 
-  if (taskId) {
-    Todo.findByIdAndUpdate(taskId, updatedData, { new: true })
+  if (_id) {
+    Todo.findByIdAndUpdate(_id, updatedData, { new: true })
       .then((result) => res.redirect('/my-tasks'))
       .catch((err) => console.log(err));
   } else {
-    const task = new Todo(req.body);
+    const task = new Todo(updatedData);
 
     task.save()
     .then((result) => res.redirect('/'))
@@ -32,7 +31,7 @@ const todo_addOrEditTask_get = (req, res) => {
      .then((result) => res.render('addTask', {title: 'EditTask', cssFile: 'addTask.css', task: result}))
      .catch((err) => console.log(err))
   } else {
-    res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css'});
+    res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css', task: null});
   }
 };
 
