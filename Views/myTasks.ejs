@@ -23,7 +23,7 @@
                 <% if(incompleteTasks.length > 0) { %>
                     <% incompleteTasks.forEach(task => { %>
                         <li>
-                            <a href="/edit-task/<%= task._id %>" class="edit-btn">✏️ Edit</a>
+                            <a href="/edit-task/<%= task._id %>" class="edit-btn">✏️</a>
                             <div class="task">
                                 <span><%= task.title %></span>
                                 <span><%= task.description %></span>
