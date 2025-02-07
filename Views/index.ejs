@@ -1,0 +1,77 @@
+<html lang="en">
+    <%- include('./Partials/head.ejs')  %>
+<body>
+    <%- include('./Partials/header.ejs') %>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Organize Your Day, Elevate Your Life!</h1>
+        <a href="/add-task"><button class="add-task">+ Add New Task</button></a>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Task List -->
+        <div class="task-list">
+            <h2>📝 <a href="/my-tasks">Yadud's Tasks</a></h2>
+
+            <% const incompleteTasks = tasks.filter(task => !task.completed); %>
+
+            <% if (incompleteTasks.length > 0) { %>
+                <% incompleteTasks.forEach(task => { %>
+                    <ul>
+                        <li>
+                            <div class="task">
+                                <span><%= task.title %></span>
+                                <span><%= task.description %></span>
+                            </div>
+                            <div class="priority-container">
+                                <p class="priority-label"><%= task.priority %></p>
+                                <div class="priority-box <%= task.priority.toUpperCase() %>"></div>
+                            </div>
+                        </li>
+                    </ul>
+                <% }) %>
+            <% } else { %>
+             <p>No tasks found.</p>
+            <% } %>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Calendar Widget -->
+            <div class="calendar">
+                <h2>📅 <a href="/calendar">Calendar</a></h2>
+                <p>[ Set Your Date ]</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <%
+                let totalTasks = tasks.length;
+                let completedTasks = tasks.filter(task => task.completed === true).length;
+                let progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+            %>
+            
+            <div class="progress">
+                <h2>📊 Task Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p><%= Math.round(progress) %>% Completed</p>
+            </div>            
+
+            <!-- Quick Notes -->
+            <div class="notes">
+                <h2>📝 Quick Notes</h2>
+                <textarea placeholder="Write a quick note..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./Partials/footer.ejs') %>
+</body>
+
+<script>
+    document.getElementById("progressFill").style.width = "<%= progress %>%";
+</script>
+</html>

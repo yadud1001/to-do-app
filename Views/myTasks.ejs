@@ -1,0 +1,120 @@
+<html lang="en">
+    <%- include('./Partials/head.ejs')  %>
+<body>
+    <%- include('./Partials/header.ejs') %>
+
+    <!-- My Tasks Section -->
+    <div class="tasks-container">
+        <h1>📝 My Tasks</h1>
+
+        <!-- Task Categories -->
+        <div class="task-tabs">
+            <button class="tab active" onclick="showTab('today')">Today</button>
+            <button class="tab" onclick="showTab('completed')">Completed</button>
+        </div>
+
+        <!-- Task List -->
+        <div class="task-list" id="today">
+            <h2>📅 Today's Tasks</h2>
+
+            <% const incompleteTasks = tasks.filter(task => !task.completed); %>
+
+            <ul id="taskList">
+                <% if(incompleteTasks.length > 0) { %>
+                    <% incompleteTasks.forEach(task => { %>
+                        <li>
+                            <a class="edit" href="/add-task/<%= task._id %>">✏️</a>
+                            <div class="task">
+                                <span><%= task.title %></span>
+                                <span><%= task.description %></span>
+                            </div>
+                            <div class="actions">
+                                <a class="complete" data-id="<%= task._id %>">✅</a>
+                                <a class="delete" data-id="<%= task._id %>">❌</a>
+                            </div>
+                        </li>
+                    <% }) %>
+                <% } else { %>
+                    <p>No tasks found.</p>
+                <% } %>
+            </ul>
+        </div>
+
+        <!-- Completed Tasks Section -->
+        <div class="task-list hidden" id="completed">
+            <h2>✅ Completed Tasks</h2>
+            <ul id="completedList">
+                <% tasks.forEach(task => { %>
+                    <% if (task.completed) { %>  <!-- Show only completed tasks -->
+                        <li class="completed-task">
+                            <span><%= task.title %></span>
+                            <span><%= task.description %></span>
+                        </li>
+                    <% } %>
+                <% }) %>
+            </ul>
+            <button id="clearAllCompleted">Clear All</button>
+        </div>
+    </div>
+
+    <!-- Floating Add Task Button -->
+    <a href="/add-task"><button class="floating-add-task">+ Add Task</button></a>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.task-list').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const taskList = document.getElementById("taskList");
+            const completedList = document.getElementById("completedList");
+            const clearAllCompleted = document.getElementById("clearAllCompleted");
+
+            taskList.addEventListener("click", function (event) {
+                if (event.target.classList.contains("complete")) {
+                    const taskId = event.target.getAttribute("data-id");
+
+                    fetch(`/my-tasks/${taskId}/complete`, { method: 'PUT' })  // Update task in MongoDB
+                        .then(response => response.json())
+                        .then(() => {
+                            const taskItem = event.target.closest("li");
+                            moveToCompleted(taskItem);
+                        })
+                        .catch(err => console.error(err));
+                }
+            });
+
+            document.addEventListener("click", function (event) {
+                if (event.target.classList.contains("delete")) {
+                    const taskId = event.target.getAttribute("data-id");
+
+                    fetch(`/my-tasks/${taskId}`, { method: 'DELETE' })
+                        .then(response => response.json())
+                        .then(() => event.target.closest("li").remove())
+                        .catch(err => console.error(err));
+                }
+            });
+
+            function moveToCompleted(taskItem) {
+                taskItem.querySelector(".actions").remove();
+                taskItem.classList.add("completed-task");
+                completedList.appendChild(taskItem);
+            }
+
+            clearAllCompleted.addEventListener("click", function () {
+                fetch('/my-tasks/clear-completed', { method: 'DELETE' })  // Remove completed tasks in database
+                    .then(() => {
+                        completedList.innerHTML = ""; // Clear UI
+                    })
+                    .catch(err => console.error(err));
+            });
+        });
+    </script>
+
+    <%- include('./Partials/footer.ejs') %>
+</body>
+</html>
