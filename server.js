@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', todoController.todo_index);
 app.post('/', todoController.todo_addOrEditTask_post);
 app.get('/add-task', todoController.todo_addOrEditTask_get);
-app.get('/edit-task/:id', todoController.todo_addOrEditTask_get);
+app.get('/edit-task/:id ([0-9a-fA-F]{24})', todoController.todo_addOrEditTask_get);
 app.get('/my-tasks', todoController.todo_myTasks);
 app.get('/myTasks', (req, res) => {res.redirect('/my-tasks')});
 app.put('/my-tasks/:id/complete', todoController.todo_completeTask);
