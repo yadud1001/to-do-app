@@ -7,33 +7,17 @@ const todo_index = (req, res) => {
   .catch((err) => console.log(err))
 };
 
-const todo_addOrEditTask_post = (req, res) => {
-  const { _id, ...updatedData } = req.body;
-
-  if (_id) {
-    Todo.findByIdAndUpdate(_id, updatedData, { new: true })
-      .then((result) => res.redirect('/'))
-      .catch((err) => console.log(err));
-  } else {
-    const task = new Todo(updatedData);
+const todo_addTask_post = (req, res) => {
+    const task = new Todo(req.body);
 
     task.save()
     .then((result) => res.redirect('/'))
     .catch((err) => console.log(err));
-  }
-};
+  };
 
-const todo_addOrEditTask_get = (req, res) => {
-  const taskId = req.params.id;
-
-  if (taskId) {
-    Todo.findById(taskId)
-     .then((result) => res.render('addTask', {title: 'EditTask', cssFile: 'addTask.css', task: result}))
-     .catch((err) => console.log(err))
-  } else {
-    res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css', task: null});
-  }
-};
+const todo_addTask_get = (req, res) => {
+  res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css'});
+  };
 
 const todo_myTasks = (req, res) => {
     Todo.find()
@@ -70,8 +54,8 @@ const todo_about = (req, res) => {
 
 module.exports = {
     todo_index,
-    todo_addOrEditTask_post,
-    todo_addOrEditTask_get,
+    todo_addTask_post,
+    todo_addTask_get,
     todo_myTasks,
     todo_deleteTask,
     todo_completeTask,
