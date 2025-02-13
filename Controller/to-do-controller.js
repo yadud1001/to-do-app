@@ -27,7 +27,7 @@ const todo_editTask_get = (req, res) => {
 };
 
 const todo_editTask_post = (req, res) => {
-  const task = Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
   .then(result => res.redirect('/my-tasks'))
   .catch((err) => console.log(err));
 };

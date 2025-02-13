@@ -23,7 +23,7 @@
                 <% if(incompleteTasks.length > 0) { %>
                     <% incompleteTasks.forEach(task => { %>
                         <li>
-                            <a href="/edit-task/<%= task._id %>" class="edit-btn" data-id="<%= task._id %>">✏️</a>
+                            <a href="#" class="edit-btn" data-id="<%= task._id %>">✏️</a>
                             <div class="task">
                                 <span><%= task.title %></span>
                                 <span><%= task.description %></span>
@@ -59,6 +59,36 @@
 
     <!-- Floating Add Task Button -->
     <a href="/add-task"><button class="floating-add-task">+ Add Task</button></a>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Task</h2>
+            
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-task-id">
+
+                <label for="edit-task-title">Task Title:</label>
+                <input type="text" id="edit-task-title" name="title" required>
+
+                <label for="edit-task-description">Description:</label>
+                <textarea id="edit-task-description" name="description" required></textarea>
+
+                <label for="edit-task-date">Due Date:</label>
+                <input type="date" id="edit-task-date" name="dueDate" required>
+
+                <label for="edit-task-priority">Priority:</label>
+                <select id="edit-task-priority" name="priority" required>
+                    <option value="" default>Select Priority</option>
+                    <option value="Low">Low</option>
+                    <option value="High">High</option>
+                </select>
+
+                <button type="submit" class="save-task-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         function showTab(tabId) {
