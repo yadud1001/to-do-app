@@ -27,7 +27,7 @@ app.get('/add-task', todoController.todo_addTask_get);
 app.get('/calendar', todoController.todo_calendar);
 app.get('/about', todoController.todo_about);
 app.post('/', todoController.todo_addTask_post);
-app.put('my-tasks.:id/edit', todoController.todo_editTask_post);
+app.post('my-tasks.:id/edit', todoController.todo_editTask_post);
 app.put('/my-tasks/:id/complete', todoController.todo_completeTask);
 app.delete('/my-tasks/clear-completed', todoController.todo_clearCompletedTasks);
 app.delete('/my-tasks/:id', todoController.todo_deleteTask);
