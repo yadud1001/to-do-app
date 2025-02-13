@@ -26,6 +26,12 @@ const todo_myTasks = (req, res) => {
   .catch((err) => console.log(err)) 
 };
 
+const todo_editTask_post = (req, res) => {
+  Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
+  .then(result => res.redirect('/my-tasks'))
+  .catch(err => console.log(err))
+};
+
 const todo_deleteTask = (req, res) => {
     Todo.findByIdAndDelete(req.params.id)
   .then(result => res.json({ redirect: '/my-tasks' }))
@@ -57,6 +63,7 @@ module.exports = {
     todo_addTask_post,
     todo_addTask_get,
     todo_myTasks,
+    todo_editTask_post,
     todo_deleteTask,
     todo_completeTask,
     todo_clearCompletedTasks,
