@@ -61,34 +61,35 @@
     <a href="/add-task"><button class="floating-add-task">+ Add Task</button></a>
 
     <!-- Edit Task Modal (Unique for each task) -->
-    <div id="edit-modal-<%= task._id %>" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" data-modal="edit-modal-<%= task._id %>">&times;</span>
-            <h2>Edit Task</h2>
+    <% tasks.forEach(task => { %>
+        <div id="edit-modal-<%= task._id %>" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" data-modal="edit-modal-<%= task._id %>">&times;</span>
+                <h2>Edit Task</h2>
 
-            <form action="/my-tasks/<%= task._id %>/edit" method="POST">
-                <input type="hidden" name="id" value="<%= task._id %>">
+                <form action="/my-tasks/<%= task._id %>/edit" method="POST">
+                    <input type="hidden" name="id" value="<%= task._id %>">
 
-                <label for="edit-task-title-<%= task._id %>">Task Title:</label>
-                <input type="text" id="edit-task-title-<%= task._id %>" name="title" value="<%= task.title %>" required>
+                    <label for="edit-task-title-<%= task._id %>">Task Title:</label>
+                    <input type="text" id="edit-task-title-<%= task._id %>" name="title" value="<%= task.title %>" required>
 
-                <label for="edit-task-description-<%= task._id %>">Description:</label>
-                <textarea id="edit-task-description-<%= task._id %>" name="description" required><%= task.description %></textarea>
+                    <label for="edit-task-description-<%= task._id %>">Description:</label>
+                    <textarea id="edit-task-description-<%= task._id %>" name="description" required><%= task.description %></textarea>
 
-                <label for="edit-task-date-<%= task._id %>">Due Date:</label>
-                <input type="date" id="edit-task-date-<%= task._id %>" name="dueDate" value="<%= task.dueDate.toISOString().split('T')[0] %>" required>
+                    <label for="edit-task-date-<%= task._id %>">Due Date:</label>
+                    <input type="date" id="edit-task-date-<%= task._id %>" name="dueDate" value="<%= task.dueDate.toISOString().split('T')[0] %>" required>
 
-                <label for="edit-task-priority-<%= task._id %>">Priority:</label>
-                <select id="edit-task-priority-<%= task._id %>" name="priority" required>
-                    <option value="Low" <%= task.priority === 'Low' ? 'selected' : '' %>>Low</option>
-                    <option value="High" <%= task.priority === 'High' ? 'selected' : '' %>>High</option>
-                </select>
+                    <label for="edit-task-priority-<%= task._id %>">Priority:</label>
+                    <select id="edit-task-priority-<%= task._id %>" name="priority" required>
+                        <option value="Low" <%= task.priority === 'Low' ? 'selected' : '' %>>Low</option>
+                        <option value="High" <%= task.priority === 'High' ? 'selected' : '' %>>High</option>
+                    </select>
 
-                <button type="submit" class="save-task-btn">Save Changes</button>
-            </form>
+                    <button type="submit" class="save-task-btn">Save Changes</button>
+                </form>
+            </div>
         </div>
-    </div>
-
+    <% }) %>
     <script>
         function showTab(tabId) {
             document.querySelectorAll('.task-list').forEach(tab => tab.classList.add('hidden'));
