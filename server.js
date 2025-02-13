@@ -23,8 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', todoController.todo_index);
 app.post('/', todoController.todo_addTask_post);
 app.get('/add-task', todoController.todo_addTask_get);
-app.get('/edit-task/:id', todoController.todo_editTask_get);
-app.put('/edit-task/:id', todoController.todo_editTask_post);
 app.get('/my-tasks', todoController.todo_myTasks);
 app.get('/myTasks', (req, res) => {res.redirect('/my-tasks')});
 app.put('/my-tasks/:id/complete', todoController.todo_completeTask);

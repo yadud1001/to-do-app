@@ -19,19 +19,6 @@ const todo_addTask_get = (req, res) => {
   res.render('addTask', {title: 'AddTask', cssFile: 'addTask.css'});
   };
 
-const todo_editTask_get = (req, res) => {
-  Todo.findById(req.params.id)
-
-  .then(result => res.render('editTask', {title: 'EditTask', cssFile: 'editTask.css', task: result}))
-  .catch((err) => console.log(err));
-};
-
-const todo_editTask_post = (req, res) => {
-  Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
-  .then(result => res.redirect('/my-tasks'))
-  .catch((err) => console.log(err));
-};
-
 const todo_myTasks = (req, res) => {
     Todo.find()
   .sort({createdAt: 1})
@@ -69,8 +56,6 @@ module.exports = {
     todo_index,
     todo_addTask_post,
     todo_addTask_get,
-    todo_editTask_get,
-    todo_editTask_post,
     todo_myTasks,
     todo_deleteTask,
     todo_completeTask,
