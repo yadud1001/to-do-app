@@ -26,7 +26,7 @@ const todo_editTask_get = (req, res) => {
   .catch((err) => console.log(err));
 };
 
-const todo_editTask_put = (req, res) => {
+const todo_editTask_post = (req, res) => {
   const task = Todo.findByIdAndUpdate(req.params.id, req.body)
 
   .then(result => res.redirect('/my-tasks'))
@@ -71,7 +71,7 @@ module.exports = {
     todo_addTask_post,
     todo_addTask_get,
     todo_editTask_get,
-    todo_editTask_put,
+    todo_editTask_post,
     todo_myTasks,
     todo_deleteTask,
     todo_completeTask,
