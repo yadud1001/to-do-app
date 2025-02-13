@@ -23,7 +23,7 @@
                 <% if(incompleteTasks.length > 0) { %>
                     <% incompleteTasks.forEach(task => { %>
                         <li>
-                            <a href="/edit-task/<%= task._id %>" class="edit-btn">✏️</a>
+                            <a href="/edit-task/<%= task._id %>" class="edit-btn" data-id="<%= task._id %>">✏️</a>
                             <div class="task">
                                 <span><%= task.title %></span>
                                 <span><%= task.description %></span>
@@ -73,6 +73,18 @@
             const taskList = document.getElementById("taskList");
             const completedList = document.getElementById("completedList");
             const clearAllCompleted = document.getElementById("clearAllCompleted");
+            const editTaskButton = document.querySelectorAll('.edit-btn');
+
+            editTaskButton.addEventListener('click', function (event) {
+                const taskId = event.target.getAttribute("data-id");
+
+                fetch (`/edit-task/${taskId}`, { method: 'PUT' })
+                 .then(response => response.json())
+                 .then(() => {
+                    window.location.href = "/my-tasks";  // Redirect to My Tasks page after editing
+                 })
+                 .catch(err => console.error(err));
+            });
 
             taskList.addEventListener("click", function (event) {
                 if (event.target.classList.contains("complete")) {
