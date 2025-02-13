@@ -19,7 +19,7 @@
     <div class="add-task-container">
         <h1>Edit Task</h1>
 
-        <form id="add-task-form" action="/my-tasks" method="PUT">
+        <form id="add-task-form" action="/edit-task/<%= task._id %>" method="POST">
             <label for="task-title">Task Title:</label>
             <input type="text" id="task-title" name="title" value="<%= task.title %>" required>
         
@@ -32,8 +32,8 @@
             <label for="task-priority">Priority:</label>
             <select id="task-priority" name="priority" required>
                 <option value="" default>Select Priority</option>
-                <option value="Low <%= task.priority === 'Low' ? 'selected' : '' %>">Low</option>
-                <option value="High <%= task.priority === 'High' ? 'selected' : '' %>">High</option>
+                <option value="Low" <%= task.priority === 'Low' ? 'selected' : '' %>>Low</option>
+                <option value="High" <%= task.priority === 'High' ? 'selected' : '' %>>High</option>
             </select>
         
             <button class="submit-task-btn" type="submit">Edit Task</button>

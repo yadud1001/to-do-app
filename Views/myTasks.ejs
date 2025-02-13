@@ -113,19 +113,6 @@
                     .catch(err => console.error(err));
             });
         });
-
-        const editTaskButton = document.querySelectorAll('.edit-btn');
-
-            editTaskButton.addEventListener('click', function (event) {
-                const taskId = event.target.getAttribute("data-id");
-
-                fetch (`/edit-task/${taskId}`, { method: 'PUT' })
-                 .then(response => response.json())
-                 .then(() => {
-                    window.location.href = "/my-tasks";  // Redirect to My Tasks page after editing
-                 })
-                 .catch(err => console.error(err));
-            });
     </script>
 
     <%- include('./Partials/footer.ejs') %>

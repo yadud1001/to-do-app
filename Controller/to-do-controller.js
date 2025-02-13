@@ -22,13 +22,12 @@ const todo_addTask_get = (req, res) => {
 const todo_editTask_get = (req, res) => {
   Todo.findById(req.params.id)
 
-  .then(result => res.render('editTask', {title: 'EditTask', cssFile: 'editTask.css'}))
+  .then(result => res.render('editTask', {title: 'EditTask', cssFile: 'editTask.css', task: result}))
   .catch((err) => console.log(err));
 };
 
 const todo_editTask_post = (req, res) => {
-  const task = Todo.findByIdAndUpdate(req.params.id, req.body)
-
+  const task = Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
   .then(result => res.redirect('/my-tasks'))
   .catch((err) => console.log(err));
 };
