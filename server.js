@@ -21,17 +21,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // todo view routes
 app.get('/', todoController.todo_index);
-app.post('/', todoController.todo_addTask_post);
-app.get('/add-task', todoController.todo_addTask_get);
 app.get('/my-tasks', todoController.todo_myTasks);
 app.get('/myTasks', (req, res) => {res.redirect('/my-tasks')});
+app.get('/add-task', todoController.todo_addTask_get);
+app.get('/calendar', todoController.todo_calendar);
+app.get('/about', todoController.todo_about);
+app.post('/', todoController.todo_addTask_post);
 app.put('my-tasks.:id/edit', todoController.todo_editTask_post);
 app.put('/my-tasks/:id/complete', todoController.todo_completeTask);
 app.delete('/my-tasks/clear-completed', todoController.todo_clearCompletedTasks);
 app.delete('/my-tasks/:id', todoController.todo_deleteTask);
-app.get('/calendar', todoController.todo_calendar);
-app.get('/about', todoController.todo_about);
-
 app.use((req, res) => {
   res.status(404).render('404', {title: '404', cssFile: '404.css'});
 });
